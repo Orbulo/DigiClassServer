@@ -1,5 +1,5 @@
 import redis from '~/redis';
-import {checkClassroom } from 'utils';
+import {checkClassroom } from '~/utils';
 
 export default async (req, res) => {
 	const userId = req.user.id;

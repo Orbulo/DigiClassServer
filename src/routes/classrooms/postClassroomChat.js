@@ -1,6 +1,6 @@
 import redis from '~/redis';
 import { nanoid } from 'nanoid';
-import {checkClassroom} from 'utils';
+import {checkClassroom} from '~/utils';
 
 export default async (req, res) => {
 	const { classroomId } = req.params;

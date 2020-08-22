@@ -1,4 +1,4 @@
-import {psubscribeTo} from 'redis';
+import {psubscribeTo} from '~/redis';
 
 export default function onConnection(socket) {
 	socket.on('disconnect', () => {
@@ -10,4 +10,8 @@ export default function onConnection(socket) {
 			console.log(channel, msg);
 		});
 	});
+
+	socket.on('disconnect-from-classroom', () => {
+
+	})
 }
