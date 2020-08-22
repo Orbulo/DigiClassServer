@@ -5,8 +5,7 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import jwt from 'express-jwt';
 
-import indexRouter from '~/routes';
-import usersRouter from '~/routes/users';
+import classroomRouter from '~/routes/classroom';
 
 const app = express();
 
@@ -23,8 +22,7 @@ app.use(jwt({
   secret: process.env.APP_SECRET
 }).unless({ path: ['/auth'] }));
 
-app.use('/', indexRouter);
-app.use('/users', usersRouter);
+app.use('/classroom', classroomRouter);
 
 // catch 404 and forward to error handler
 app.use(function(req, res, next) {

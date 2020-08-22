@@ -6,4 +6,5 @@ const router = express.Router();
 router.get('/', getUserClassrooms);
 router.get('/:classroomId', getClassroom);
 
-module.exports = router;
+export default router;
+
