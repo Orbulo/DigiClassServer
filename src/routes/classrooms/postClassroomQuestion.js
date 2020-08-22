@@ -11,12 +11,7 @@ export default async (req, res) => {
 		upvotes: 0,
 		title,
 		content,
-		authorId: userId,
+		userId,
 	});
-	await redis.publish(`classroom:${classroomId}:question-posted`, {
-		title,
-		content,
-		authorId: userId,
-	})
 	res.sendStatus(200);
 }
