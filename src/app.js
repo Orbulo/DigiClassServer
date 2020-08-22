@@ -26,11 +26,12 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(jwt({
   secret: process.env.APP_SECRET,
   algorithms: ['rs256'],
-}).unless({ path: /^\/auth/ }));
+}).unless({ path: [/^\/auth/, /^\/$/] }));
 
 app.use(express.static('public'));
 
 // Classrooms relating to the current user
+app.get('/', (req, res) => res.json({ success: true }));
 app.use('/auth', authRouter);
 app.use('/classrooms', classroomsRouter);
 app.use('/rooms', roomsRouter);
