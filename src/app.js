@@ -7,6 +7,7 @@ import jwt from 'express-jwt';
 
 import classroomsRouter from '~/routes/classrooms';
 import authRouter from '~/routes/auth';
+import roomsRouter from '~/routes/rooms';
 
 const app = express();
 
@@ -28,6 +29,7 @@ app.use(express.static('public'));
 // Classrooms relating to the current user
 app.use('/auth', authRouter);
 app.use('/classrooms', classroomsRouter);
+app.use('/rooms', roomsRouter);
 
 // catch 404 and forward to error handler
 app.use(function (req, res, next) {
