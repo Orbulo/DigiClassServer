@@ -4,7 +4,7 @@ import getRoom from './getRoom';
 
 const router = express.Router();
 
-router.post('/room/create', createRoom);
-router.get('/room/:id', getRoom);
+router.post('/create', createRoom);
+router.get('/:roomId', getRoom);
 
 export default router;
