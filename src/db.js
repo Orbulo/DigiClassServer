@@ -1,6 +1,6 @@
 import pg from 'pg';
 
-const client = pg.Client();
+const client = new pg.Client();
 
 client.connect();
 client.query(`

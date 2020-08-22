@@ -7,15 +7,17 @@ import createClassroom from './createClassroom';
 import joinClassroom from './joinClassroom';
 import getClassroomUser from './getClassroomUser';
 import getClassroomAnswers from './getClassroomAnswers';
-import checkClassroom from '~/routes/classrooms/checkClassroom';
-import postClassroomQuestion from '~/routes/classrooms/postClassroomQuestion';
-import postClassroomAnswer from '~/routes/classrooms/postClassroomAnswer';
-import upvoteClassroomAnswer from '~/routes/classrooms/upvoteClassroomAnswer';
-import upvoteClassroomQuestion from '~/routes/classrooms/upvoteClassroomQuestion';
+import checkClassroom from './checkClassroom';
+import postClassroomQuestion from './postClassroomQuestion';
+import postClassroomAnswer from './postClassroomAnswer';
+import upvoteClassroomAnswer from './upvoteClassroomAnswer';
+import upvoteClassroomQuestion from './upvoteClassroomQuestion';
 import uploadFile from './uploadFile';
-import upload from 'multer';
-import getClassroomQuestions from '~/routes/classrooms/getClassroomQuestions';
+import multer from 'multer';
+import getClassroomQuestions from './getClassroomQuestions';
 const router = express.Router();
+
+const upload = multer({ dest: 'uploads/' });
 
 router.get('/', getUserClassrooms);
 router.post('/', createClassroom);
