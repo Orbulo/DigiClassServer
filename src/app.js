@@ -4,7 +4,6 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import jwt from 'express-jwt';
-import { nanoid } from 'nanoid';
 
 import classroomsRouter from '~/routes/classrooms';
 import authRouter from '~/routes/auth';
@@ -13,7 +12,6 @@ const app = express();
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
-app.set('view engine', 'ejs');
 
 app.use(logger('dev'));
 app.use(express.json());
@@ -25,17 +23,7 @@ app.use(jwt({
   algorithms: ['rs256'],
 }).unless({ path: ['/auth'] }));
 
-app.set('view engine', 'ejs')
-app.use(express.static('public'))
-
-app.get('/', (req, res) => {
-  res.redirect(`/${nanoid()}`)
-})
-
-app.get('/video/:room', (req, res) => {
-  res.render('room', { roomId: req.params.room })
-})
-
+app.use(express.static('public'));
 
 // Classrooms relating to the current user
 app.use('/auth', authRouter);
@@ -47,7 +35,7 @@ app.use(function (req, res, next) {
 });
 
 // error handler
-app.use(function (err, req, res, next) {
+app.use(function (err, req, res) {
   // set locals, only providing error in development
   res.locals.message = err.message;
   res.locals.error = req.app.get('env') === 'development' ? err : {};
