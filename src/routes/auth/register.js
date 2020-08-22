@@ -7,11 +7,11 @@ import jwt from 'jsonwebtoken';
 export default async (req, res) => {
 	const { email, password, fullName } = req.body;
 
+	const userId = nanoid();
 	const passwordHash = await bcrypt.hash(password, 10);
 	await db.query(`
-		insert into account (email, password_hash) values ($1, $2)
-	`, [email, passwordHash]);
-	const userId = nanoid();
+		insert into account (email, password_hash, user_id) values ($1, $2, $3)
+	`, [email, passwordHash, userId]);
 	await redis.hmset(`user:${userId}`, {
 		avatarUrl: '',
 		name: fullName,
