@@ -3,10 +3,8 @@ import { nanoid } from 'nanoid';
 
 export default async (req, res) => {
 	const { classroomId } = req.params;
-	checkClassroom(classroomId);
 	const userId = req.user.id;
 	const { question } = req.body;
-	const reputation = await redis.hget(`classroom:${classroomId}:user:${userId}`, 'reputation');
 	const questionId = nanoid();
 	await redis.sadd(`classroom:${classroomId}:question-ids`, questionId);
 	await redis.hmset(`classroom:${classroomId}:question:${questionId}`, {
@@ -18,4 +16,5 @@ export default async (req, res) => {
 		question,
 		authorId: userId,
 	})
+	res.sendStatus(200);
 }

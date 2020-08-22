@@ -1,4 +1,5 @@
 import Redis from 'ioredis';
+import camelcase from 'camelcase';
 
 export default function onConnection(socket) {
 	let currentClassroomId;
@@ -11,10 +12,11 @@ export default function onConnection(socket) {
 	socket.on('connect-to-classroom', async (classroomId) => {
 		await sub.punsubcribe(`classroom:${currentClassroomId}:*`);
 		currentClassroomId = classroomId;
-		sub.psubscribe(`classroom:${classroomId}:*`, (channel, msg) => {
+		sub.psubscribe(`classroom:${classroomId}:*`);
+		sub.on('pmessage', (pattern, channel, msg) => {
+			console.log(pattern, channel, msg);
 			const topic = channel.split(':').pop();
-			console.log(channel, msg);
-			socket.to(classroomId).broadcast.emit(camelcase(topic), JSON.parse(msg));
+			socket.to(classroomId).broadcast.emit(camelcase(topic, { pascalCase: true }), JSON.parse(msg));
 		});
 	});
 

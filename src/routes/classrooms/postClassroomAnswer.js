@@ -1,7 +1,7 @@
 import redis from '~/redis';
 import { nanoid } from 'nanoid';
 
-export default (req, res) => {
+export default async (req, res) => {
 	const { classroomId, questionId } = req.params;
 	const { answer } = req.body;
 	const userId = req.user.id;
@@ -16,5 +16,6 @@ export default (req, res) => {
 		questionId,
 		answer,
 		authorId: userId,
-	})
+	});
+	res.sendStatus(200);
 }

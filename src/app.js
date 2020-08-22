@@ -7,6 +7,7 @@ import jwt from 'express-jwt';
 import { nanoid } from 'nanoid';
 
 import classroomsRouter from '~/routes/classrooms';
+import authRouter from '~/routes/auth';
 
 const app = express();
 
@@ -37,6 +38,7 @@ app.get('/:room', (req, res) => {
 
 
 // Classrooms relating to the current user
+app.use('/auth', authRouter);
 app.use('/classrooms', classroomsRouter);
 
 // catch 404 and forward to error handler

@@ -1,6 +1,6 @@
 import redis from '~/redis';
 
-export default async (req, res) => {
+export default async (req, res, next) => {
 	const { classroomId } = req.params;
 	if (classroomId) {
 		if (!await redis.exists(`classroom:${classroomId}`)) {
@@ -12,4 +12,5 @@ export default async (req, res) => {
 			throw new Error(`User ${userId} is not part of classroom ${classroomId}`);
 		}
 	}
+	next();
 }
