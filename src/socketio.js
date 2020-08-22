@@ -9,7 +9,7 @@ export default function onConnection(socket) {
 		console.log('User disconnected.');
 	});
 
-	socket.on('connect-to-classroom', async (classroomId) => {
+	socket.on('connectToClassroom', async (classroomId) => {
 		await sub.punsubcribe(`classroom:${currentClassroomId}:*`);
 		currentClassroomId = classroomId;
 		sub.psubscribe(`classroom:${classroomId}:*`);
@@ -20,12 +20,12 @@ export default function onConnection(socket) {
 		});
 	});
 
-	socket.on('join-room', (roomId, userId) => {
+	socket.on('joinRoom', (roomId, userId) => {
 		socket.join(roomId)
-		socket.to(roomId).broadcast.emit('user-connected', userId)
+		socket.to(roomId).broadcast.emit('userConnected', userId)
 
 		socket.on('disconnect', () => {
-			socket.to(roomId).broadcast.emit('user-disconnected', userId)
-		})
+			socket.to(roomId).broadcast.emit('userDisconnected', userId)
+		});
 	})
 }
