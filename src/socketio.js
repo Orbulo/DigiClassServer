@@ -1,4 +1,4 @@
-import {psubscribeTo} from '~/redis';
+import { psubscribeTo } from '~/redis';
 
 export default function onConnection(socket) {
 	socket.on('disconnect', () => {
@@ -13,5 +13,13 @@ export default function onConnection(socket) {
 
 	socket.on('disconnect-from-classroom', () => {
 
+	})
+	socket.on('join-room', (roomId, userId) => {
+		socket.join(roomId)
+		socket.to(roomId).broadcast.emit('user-connected', userId)
+
+		socket.on('disconnect', () => {
+			socket.to(roomId).broadcast.emit('user-disconnected', userId)
+		})
 	})
 }
