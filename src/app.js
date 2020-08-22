@@ -23,7 +23,7 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(jwt({
   secret: process.env.APP_SECRET,
-  algorithms: ['rs256'],
+  algorithms: ['HS256'],
 }).unless({ path: [/^\/auth/, /^\/$/] }));
 
 app.use(express.static('public'));
