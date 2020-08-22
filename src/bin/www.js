@@ -3,7 +3,7 @@ import app from '~/app';
 import http from 'http';
 import createDebug from 'debug';
 import socketio from 'socket.io';
-import onConnection from 'socketio';
+import onConnection from '~/socketio';
 
 const debug = createDebug('server:server');
 
