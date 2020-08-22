@@ -4,6 +4,7 @@ import path from 'path';
 import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import jwt from 'express-jwt';
+import cors from 'cors';
 
 import classroomsRouter from '~/routes/classrooms';
 import authRouter from '~/routes/auth';
@@ -14,6 +15,7 @@ const app = express();
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
 
+app.use(cors());
 app.use(logger('dev'));
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -22,7 +24,7 @@ app.use(express.static(path.join(__dirname, 'public')));
 app.use(jwt({
   secret: process.env.APP_SECRET,
   algorithms: ['rs256'],
-}).unless({ path: ['/auth'] }));
+}).unless({ path: /^\/auth/ }));
 
 app.use(express.static('public'));
 
