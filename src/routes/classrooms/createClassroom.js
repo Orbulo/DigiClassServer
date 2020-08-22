@@ -6,6 +6,7 @@ export default async (req, res) => {
 	const { name, courseCode } = req.body;
 	const userId = req.user.id;
 	await redis.hmset(`classroom:${classroomId}`, {
+		id: classroomId,
 		name,
 		courseCode,
 	});
