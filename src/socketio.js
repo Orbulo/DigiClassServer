@@ -9,16 +9,15 @@ export default function onConnection(socket) {
 	});
 
 	socket.on('connect-to-classroom', async (classroomId) => {
-		await sub.punsubcribe(`classroom:${currentClassroomId}`);
+		await sub.punsubcribe(`classroom:${currentClassroomId}:*`);
 		currentClassroomId = classroomId;
 		sub.psubscribe(`classroom:${classroomId}:*`, (channel, msg) => {
+			const topic = channel.split(':').pop();
 			console.log(channel, msg);
+			socket.to(classroomId).broadcast.emit(camelcase(topic), JSON.parse(msg));
 		});
 	});
 
-	socket.on('disconnect-from-classroom', () => {
-
-	})
 	socket.on('join-room', (roomId, userId) => {
 		socket.join(roomId)
 		socket.to(roomId).broadcast.emit('user-connected', userId)

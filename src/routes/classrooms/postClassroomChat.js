@@ -13,5 +13,9 @@ export default async (req, res) => {
 		message,
 	});
 	await redis.rpush(`classroom:${classroomId}:chat-messages`, messageId);
+	await redis.publish(`classroom:${classroomId}:chat-message-posted`, {
+		userId,
+		message,
+	});
 	res.sendStatus(200);
 };
