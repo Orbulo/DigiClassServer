@@ -5,12 +5,14 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import jwt from 'express-jwt';
 import cors from 'cors';
+import { PeerServer } from 'peer';
 
 import classroomsRouter from '~/routes/classrooms';
 import authRouter from '~/routes/auth';
 import roomsRouter from '~/routes/rooms';
 
 const app = express();
+PeerServer({ port: 5000, path: '/peer' });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
