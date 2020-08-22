@@ -8,5 +8,5 @@ export default async (req, res) => {
 		name,
 		code,
 	});
-	res.sendStatus(200);
+	res.json({ classroomId });
 }
