@@ -2,6 +2,8 @@ import 'dotenv/config';
 import app from '~/app';
 import http from 'http';
 import createDebug from 'debug';
+import socketio from 'socket.io';
+import onConnection from 'socketio';
 
 const debug = createDebug('server:server');
 
@@ -17,6 +19,9 @@ app.set('port', port);
  */
 
 const server = http.createServer(app);
+const io = socketio(server);
+
+io.on('connection', onConnection);
 
 /**
  * Listen on provided port, on all network interfaces.
