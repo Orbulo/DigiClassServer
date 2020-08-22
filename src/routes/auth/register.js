@@ -16,5 +16,8 @@ export default async (req, res) => {
 		avatarUrl: '',
 		name: fullName,
 	});
-	res.json({ token: jwt.sign({ id: userId }, process.env.APP_SECRET)});
+	res.json({
+		token: jwt.sign({ id: userId }, process.env.APP_SECRET),
+		userId,
+	});
 }
