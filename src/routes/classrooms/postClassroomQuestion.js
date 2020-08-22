@@ -13,7 +13,7 @@ export default async (req, res) => {
 		content,
 		authorId: userId,
 	});
-	await redis.publish(`classroom:${classroomId}:questionPosted`, {
+	await redis.publish(`classroom:${classroomId}:question-posted`, {
 		title,
 		content,
 		authorId: userId,
