@@ -13,7 +13,6 @@ export default async (req, res) => {
 		insert into account (email, password_hash, user_id) values ($1, $2, $3)
 	`, [email, passwordHash, userId]);
 	await redis.hmset(`user:${userId}`, {
-		avatarUrl: '',
 		name: fullName,
 	});
 	res.json({
