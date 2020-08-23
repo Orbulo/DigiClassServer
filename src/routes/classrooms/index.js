@@ -28,12 +28,12 @@ router.get('/:classroomId', getClassroom);
 router.get('/:classroomId/chat', getClassroomChat);
 router.post('/:classroomId/chat', postClassroomChat);
 router.get('/:classroomId/user/:userId', getClassroomUser);
-router.get('/:classroomId/question', getClassroomQuestions);
-router.post('/:classroomId/question', postClassroomQuestion);
-router.post('/:classroomId/question/:questionId/answer', postClassroomAnswer);
-router.get('/:classroomId/question/:questionId/answer', getClassroomAnswers);
-router.post('/:classroomId/question/:questionId/upvote', upvoteClassroomQuestion);
-router.post('/:classroomId/question/:questionId/answer/:answerId/upvote', upvoteClassroomAnswer);
+router.get('/:classroomId/questions', getClassroomQuestions);
+router.post('/:classroomId/questions', postClassroomQuestion);
+router.post('/:classroomId/questions/:questionId/answers', postClassroomAnswer);
+router.get('/:classroomId/questions/:questionId/answers', getClassroomAnswers);
+router.post('/:classroomId/questions/:questionId/upvote', upvoteClassroomQuestion);
+router.post('/:classroomId/questions/:questionId/answers/:answerId/upvote', upvoteClassroomAnswer);
 
 export default router;
 

@@ -12,6 +12,11 @@ export default async (req, res) => {
 	const { passwordHash, userId } = camelcaseKeys(rows[0]);
 
 	if (await bcrypt.compare(password, passwordHash)) {
-		res.json({ token: jwt.sign({ id: userId }, process.env.APP_SECRET)});
+		res.json({
+			token: jwt.sign({ id: userId }, process.env.APP_SECRET),
+			userId,
+		});
+	} else {
+		throw new Error("Passwords don't match.");
 	}
 }
