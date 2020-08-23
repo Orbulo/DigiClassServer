@@ -1,8 +1,10 @@
 import redis from '~/redis';
-import { nanoid } from 'nanoid';
+import { customAlphabet, nanoid } from 'nanoid';
+
+const generateClassroomId = customAlphabet('2346789ABCDEFGHJKLMNPQRTUVWXYZabcdefghijkmnpqrtwxyz', 8);
 
 export default async (req, res) => {
-	const classroomId = nanoid(8);
+	const classroomId = generateClassroomId();
 	const { name, courseCode } = req.body;
 	const userId = req.user.id;
 	await redis.hmset(`classroom:${classroomId}`, {
