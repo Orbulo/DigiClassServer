@@ -17,7 +17,7 @@ const s3 = new AWS.S3({
     // Setting up S3 upload parameters
     const params = {
       Bucket: BUCKET_NAME,
-      Key: `public/digiclass/class/${classId}/question/${fileName}`, // File name you want to save as in S3
+      Key: `files/classes/${classId}/question/${fileName}`, // File name you want to save as in S3
       Body: fileContent,
     };
   
