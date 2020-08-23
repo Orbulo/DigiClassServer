@@ -4,6 +4,8 @@ import http from 'http';
 import createDebug from 'debug';
 import socketio from 'socket.io';
 import onConnection from '~/socketio';
+import Redis from 'ioredis';
+import camelcase from 'camelcase';
 
 const debug = createDebug('server:server');
 
@@ -21,7 +23,32 @@ app.set('port', port);
 const server = http.createServer(app);
 const io = socketio(server);
 
-io.on('connection', onConnection);
+const classroomSub = new Redis(process.env.REDIS_URL);
+classroomSub.psubscribe(`classroom:*`);
+classroomSub.on('pmessage', (pattern, channel, msg) => {
+  const [, classroomId, topic] = channel.split(':');
+  io.in(classroomId).emit(camelcase(topic, {pascalCase: true}), JSON.parse(msg));
+});
+
+io.on('connection', (socket) => {
+    socket.on('disconnect', () => {
+      console.log('User disconnected.');
+    });
+
+    socket.on('connectToClassroom', async (classroomId) => {
+      socket.join(classroomId);
+    });
+
+    socket.on('joinRoom', (roomId, userId) => {
+      socket.join(roomId)
+      socket.to(roomId).broadcast.emit('userConnected', userId)
+
+      socket.on('disconnect', () => {
+        socket.to(roomId).broadcast.emit('userDisconnected', userId)
+      });
+    })
+  }
+);
 
 /**
  * Listen on provided port, on all network interfaces.
