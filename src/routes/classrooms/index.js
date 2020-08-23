@@ -12,7 +12,8 @@ import postClassroomQuestion from './postClassroomQuestion';
 import postClassroomAnswer from './postClassroomAnswer';
 import upvoteClassroomAnswer from './upvoteClassroomAnswer';
 import upvoteClassroomQuestion from './upvoteClassroomQuestion';
-import uploadFile from './uploadFile';
+import uploadAssignment from './uploadAssignment';
+import uploadQuestionFile from './uploadQuestionFile';
 import multer from 'multer';
 import getClassroomQuestions from './getClassroomQuestions';
 const router = express.Router();
@@ -23,7 +24,7 @@ router.get('/', getUserClassrooms);
 router.post('/', createClassroom);
 router.post('/join', joinClassroom);
 router.use('/:classroomId', checkClassroom);
-router.post('/:classroomId/upload', upload.array('files', 5), uploadFile);
+router.post('/:classroomId/upload', upload.array('files', 5), uploadAssignment);
 router.get('/:classroomId', getClassroom);
 router.get('/:classroomId/chat', getClassroomChat);
 router.post('/:classroomId/chat', postClassroomChat);
@@ -34,6 +35,8 @@ router.post('/:classroomId/question/:questionId/answer', postClassroomAnswer);
 router.get('/:classroomId/question/:questionId/answer', getClassroomAnswers);
 router.post('/:classroomId/question/:questionId/upvote', upvoteClassroomQuestion);
 router.post('/:classroomId/question/:questionId/answer/:answerId/upvote', upvoteClassroomAnswer);
+
+router.post('/:classroomId/question/:questionId/upload', uploadQuestionFile)
 
 export default router;
 
