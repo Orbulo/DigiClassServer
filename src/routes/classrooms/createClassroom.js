@@ -1,5 +1,5 @@
 import redis from '~/redis';
-import { customAlphabet, nanoid } from 'nanoid';
+import { customAlphabet } from 'nanoid';
 
 const generateClassroomId = customAlphabet('2346789ABCDEFGHJKLMNPQRTUVWXYZabcdefghijkmnpqrtwxyz', 8);
 
