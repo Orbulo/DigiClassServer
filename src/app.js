@@ -5,14 +5,12 @@ import cookieParser from 'cookie-parser';
 import logger from 'morgan';
 import jwt from 'express-jwt';
 import cors from 'cors';
-import { PeerServer } from 'peer';
 
 import classroomsRouter from '~/routes/classrooms';
 import authRouter from '~/routes/auth';
 import roomsRouter from '~/routes/rooms';
 
 const app = express();
-PeerServer({ port: 5000, path: '/peer' });
 
 // view engine setup
 app.set('views', path.join(__dirname, 'views'));
@@ -25,12 +23,13 @@ app.use(cookieParser());
 app.use(express.static(path.join(__dirname, 'public')));
 app.use(jwt({
   secret: process.env.APP_SECRET,
-  algorithms: ['rs256'],
-}).unless({ path: /^\/auth/ }));
+  algorithms: ['HS256'],
+}).unless({ path: [/^\/auth/, /^\/$/] }));
 
 app.use(express.static('public'));
 
 // Classrooms relating to the current user
+app.get('/', (req, res) => res.json({ success: true }));
 app.use('/auth', authRouter);
 app.use('/classrooms', classroomsRouter);
 app.use('/rooms', roomsRouter);

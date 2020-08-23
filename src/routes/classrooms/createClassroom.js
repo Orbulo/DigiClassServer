@@ -2,11 +2,14 @@ import redis from '~/redis';
 import { nanoid } from 'nanoid';
 
 export default async (req, res) => {
-	const classroomId = nanoid();
-	const { name, code } = req.body;
+	const classroomId = nanoid(8);
+	const { name, courseCode } = req.body;
+	const userId = req.user.id;
 	await redis.hmset(`classroom:${classroomId}`, {
+		id: classroomId,
 		name,
-		code,
+		courseCode,
 	});
-	res.sendStatus(200);
+	await redis.sadd(`user:${userId}:classroom-ids`, classroomId);
+	res.json({ classroomId });
 }
