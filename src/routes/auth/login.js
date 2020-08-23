@@ -16,5 +16,7 @@ export default async (req, res) => {
 			token: jwt.sign({ id: userId }, process.env.APP_SECRET),
 			userId,
 		});
+	} else {
+		throw new Error("Passwords don't match.");
 	}
 }

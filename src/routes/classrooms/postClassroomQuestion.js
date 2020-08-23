@@ -8,6 +8,7 @@ export default async (req, res) => {
 	const questionId = nanoid();
 	await redis.sadd(`classroom:${classroomId}:question-ids`, questionId);
 	await redis.hmset(`classroom:${classroomId}:question:${questionId}`, {
+		id: questionId,
 		upvotes: 0,
 		title,
 		content,

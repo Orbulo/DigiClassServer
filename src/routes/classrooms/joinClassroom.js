@@ -9,9 +9,6 @@ export default async (req, res) => {
 		await redis.hmset(`classroom:${classroomId}:user:${userId}`, {
 			reputation: 0,
 		});
-		await redis.publish(`classroom:${classroomId}:student-joined`, {
-			userId,
-		});
 		res.sendStatus(200);
 	} else {
 		throw new Error('Classroom not found.');
