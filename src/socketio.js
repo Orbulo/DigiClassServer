@@ -10,7 +10,8 @@ export default function onConnection(socket) {
 	});
 
 	socket.on('connectToClassroom', async (classroomId) => {
-		await classroomSub.punsubcribe(`classroom:${currentClassroomId}:*`);
+		socket.join(classroomId);
+		await classroomSub.punsubscribe(`classroom:${currentClassroomId}:*`);
 		currentClassroomId = classroomId;
 		classroomSub.psubscribe(`classroom:${classroomId}:*`);
 		classroomSub.on('pmessage', (pattern, channel, msg) => {
